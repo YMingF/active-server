@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>注册</title>
+  </head>
+  <body>
+    <form id="registerForm">
+      <!--用户名-->
+      <div>
+        <label for="">
+          用户名
+          <input type="text" name="name" />
+        </label>
+      </div>
+      <!--密码-->
+      <div>
+        <label for="">
+          密码
+          <input type="password" name="password" />
+        </label>
+      </div>
+      <!--提交-->
+      <div>
+        <button type="submit">注册</button>
+      </div>
+    </form>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      $form = $("#registerForm");
+      $form.on("submit", (e) => {
+        e.preventDefault(); //阻止默认事件,在这里的默认事件就是提交之后自动刷新界面
+        const name = $form.find("input[name=name]").val(); //获取输入框的值
+        const password = $form.find("input[name=password]").val(); //获取密码框的值
+        console.log(name, password);
+        //拿到账号和密码之后，发ajax请求提交一下
+        $.ajax({
+          method: "POST",
+          url: "/register",
+          contentType: "text/json;charset=UTF-8",
+          data: JSON.stringify({ name: name, password: password }), //这里可以简写成{name,password}
+        }).then(
+          () => {
+            alert("注册成功");
+            location.href = "/sign_in.html";
+          },
+          () => {}
+        );
+      });
+    </script>
+  </body>
+</html>
